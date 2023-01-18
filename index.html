@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <title>Encriptador</title>
+</head>
+<body>
+    <div id="container">
+        <div id="left-col">
+            <div id="header">
+                <img class="logo" src="Images/Logo.png" alt="logo de alura">
+            </div>
+            <div id="main-content">
+                <textarea  id="text-input" cols="30" rows="10" placeholder="Ingrese el texto aqui"></textarea>
+            </div>
+            <div id="footer">
+                <div>
+                    <h6 id="informacion">Solo letras minúsculas y sin acentos</h6>
+                    <h6 id="informacion1">Apenas letras minúsculas e sem acento.</h6>
+                </div>
+                <div class="btns">
+                    <button class="btn-encriptar"  onclick="encriptar()">Encriptar</button>
+                    <button class="btn-desencriptar" onclick="desencriptar()">Desencriptar</button>
+                </div>
+            </div>
+        </div>
+        <div id="right-col">
+            <textarea  class="mensaje" cols="20" rows="10" id="result"></textarea>
+                <img id="img" src="Images/Muñeco.png" alt="Muñeco">
+                <div id="text-container">
+                    <p id="mns1">Ningún mensaje fue encontrado</p>
+                    <p id="mns2">Ingresa el texto que desees encriptar o desencriptar.</p>
+                </div>
+                <button class="btn-copiar" id="copyButton">Copiar</button>
+        </div>
+    </div>
+    <script>
+        function encriptar() {
+            var str = document.getElementById("text-input").value;
+            if(str.match(/[^a-z0-9]|[A-Z]|[\u00C0-\u017F]/)){
+                alert("No se permiten caracteres especiales, acentos ni mayúsculas!");
+                document.getElementById("text-input").value = "";
+                document.getElementById("result").value = "";
+            } else if (str.length < 1) {
+                alert("Por favor ingrese un texto!");
+            } else {
+                var result = str.replace(/e/gi, "enter")
+                                .replace(/i/gi, "imes")
+                                .replace(/a/gi, "ai")
+                                .replace(/o/gi, "ober")
+                                .replace(/u/gi, "ufat");
+                document.getElementById("result").value = result;
+                document.getElementById("img").style.display = "none";
+                document.getElementById("mns1").style.display = "none";
+                document.getElementById("mns2").style.display = "none";
+                document.getElementById("result").style.display = "block";
+                document.getElementById("copyButton").style.display = "block"; 
+                document.getElementById("informacion").style.display = "none";
+                document.getElementById("informacion1").style.display = "block";          
+            }
+        }
+        
+        function desencriptar() {
+        var str = document.getElementById("text-input").value;
+        if(str.match(/[^a-z0-9]|[A-Z]|[\u00C0-\u017F]/)){
+            alert("No se permiten caracteres especiales, acentos ni mayúsculas!");
+            document.getElementById("text-input").value = "";
+            document.getElementById("result").value = "";
+        } else if (str.length < 1) {
+                alert("Por favor ingrese un texto!");
+        } else{
+            var result = str.replace(/enter/gi, "e")
+                            .replace(/imes/gi, "i")
+                            .replace(/ai/gi, "a")
+                            .replace(/ober/gi, "o")
+                            .replace(/ufat/gi, "u");
+            document.getElementById("result").value = result;
+            document.getElementById("img").style.display = "none";
+            document.getElementById("mns1").style.display = "none";
+            document.getElementById("mns2").style.display = "none";
+            document.getElementById("result").style.display = "block";
+            document.getElementById("copyButton").style.display = "block";
+            document.getElementById("informacion").style.display = "none";  
+            document.getElementById("informacion1").style.display = "block";   
+        }
+        }
+
+        function copyText() {
+            var input = document.getElementById("text-input");
+            var output = document.getElementById("result");
+            if (output.value !== "") {
+                output.select();
+                document.execCommand("copy");
+                alert("Texto copiado: " + output.value);
+                document.getElementById("text-input").value = "";
+                document.getElementById("result").value = "";
+                if (screen.width < 768 || screen.width < 375) {
+                  document.getElementById("img").style.display = "none";
+                }
+                document.getElementById("mns1").style.display = "block";
+                document.getElementById("mns2").style.display = "block";
+                document.getElementById("copyButton").style.display = "none";
+                document.getElementById("result").style.display = "none";
+                document.getElementById("informacion").style.display = "block"; 
+                document.getElementById("informacion1").style.display = "none";    
+                input.focus();
+            } else {
+                alert("El campo esta vacio");
+                input.focus();
+            }
+        }        
+        
+        document.getElementById("copyButton").addEventListener("click", copyText);
+        document.getElementById("result").style.display = "none";
+        document.getElementById("copyButton").style.display = "none";
+        document.getElementById("informacion1").style.display = "none";     
+    </script>
+</body>
+</html>
